@@ -43,10 +43,12 @@ var board;
 var grow;
 var dir;
 
+// start and end of linked list
 var head, tail;
 
 var gameTimer;
 
+// starts a new game
 function new_game()
 {
 	board = {};
@@ -64,6 +66,7 @@ function new_game()
 	gameTimer = setInterval( game_frame, 100 );
 }
 
+// places the wall bordering the playing field
 function setup_board()
 {
 	for ( var x = 0; x < WIDTH; x++ )
@@ -79,6 +82,7 @@ function setup_board()
 	}	
 }
 
+// places a new piece of food at a random location on the board
 function place_food()
 {
 	var x,y;
@@ -95,6 +99,7 @@ function place_food()
 	board[ p ] = FOOD;
 }
 
+// draw the snake at a new location
 function game_frame()
 {
 	var nh = getNextHeadPosition();
@@ -129,6 +134,8 @@ function game_frame()
 	draw_board();
 }
 
+// draw the board.
+// this could easily be done with a canvas instead.
 function draw_board()
 {
 	var out = "";
@@ -149,6 +156,7 @@ function draw_board()
 	document.body.innerHTML = out;
 }
 
+// calculate the snake's next head location
 function getNextHeadPosition()
 {
 	var dx = 0, dy = 0;
@@ -172,6 +180,7 @@ function getNextHeadPosition()
 	return new Point( head.data.x + dx, head.data.y + dy );
 }
 
+// respond to key presses
 addEventListener( "keydown", e =>
 	{
 		
@@ -185,7 +194,7 @@ addEventListener( "keydown", e =>
 				{
 					dir = e.key;
 					game_frame();
-					//reset_timer();
+					reset_timer();
 				}
 				break;
 			case "n":
@@ -195,6 +204,8 @@ addEventListener( "keydown", e =>
 		}
 	});
 
+// reset the timer
+// this smoothes out animation when the user presses a key
 function reset_timer()
 {
 	clearInterval( gameTimer );
